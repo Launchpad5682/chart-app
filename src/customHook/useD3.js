@@ -1,15 +1,13 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { useApp } from "../Context/AppContext";
 
-const useD3 = (renderChartFn, dependencies) => {
-  const ref = React.useRef();
-
-  React.useEffect(() => {
+const useD3 = (renderChartFn) => {
+  const ref = useRef();
+  const dataCount = useApp();
+  useEffect(() => {
     renderChartFn(d3.select(ref.current));
-
-    return () => {};
-    // eslint-disable-next-line
-  }, dependencies);
+  }, [dataCount, renderChartFn]);
 
   return ref;
 };
